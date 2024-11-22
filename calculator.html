@@ -1,180 +1,39 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Simple Calculator </title>
-    <style>
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0d121d;
-        }
-
-        .calculator { 
-            background-color: #333333;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .display {
-            background-color: #351491;
-            padding: 10px;
-            margin-bottom: 10px;
-            text-align: right;
-            border-radius: 5px;
-        }
-
-        #result {
-            font-size: 24px;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: right;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-        }
-
-        button {
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #1f1b1b;
-            color: hwb(82 91% 6%);
-        }
-
-        button:hover {
-            background-color: #999;
-        }
-
-        .operator {
-            background-color: #ff9500;
-        }
-
-        .operator:hover {
-            background-color: #ffaa33;
-        }
-
-        .equals {
-            background-color: #2ecc71;
-        }
-
-        .equals:hover {
-            background-color: #27ae60;
-        }
-
-        .clear {
-            background-color: #3ce792;
-        }
-
-        .clear:hover {
-            background-color: #2bc050;
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
-            <input type="text" id="result" readonly value="0">
-        </div>
-        <div class="buttons">
-            <button class="clear" onclick="clearDisplay()">C</button>
-            <button onclick="appendNumber('(')">(</button>
-            <button onclick="appendNumber(')')">)</button>
-            <button class="operator" onclick="appendOperator('/')">/</button>
-            
-            <button onclick="appendNumber('7')">7</button>
-            <button onclick="appendNumber('8')">8</button>
-            <button onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('*')">×</button>
-            
-            <button onclick="appendNumber('4')">4</button>
-            <button onclick="appendNumber('5')">5</button>
-            <button onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('-')">-</button>
-            
-            <button onclick="appendNumber('1')">1</button>
-            <button onclick="appendNumber('2')">2</button>
-            <button onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-            
-            <button onclick="appendNumber('0')">0</button>
-            <button onclick="appendNumber('.')">.</button>
-            <button onclick="backspace()">⌫</button>
-            <button class="equals" onclick="calculate()">=</button>
+    <div class="container">
+        <div class="calculator">
+                <input type="text" placeholder="0" id="ot">
+                <button onclick="clr()">clr</button>
+                <button onclick="del()">DEL</button>
+                <button onclick="display('%')">%</button>
+                <button onclick="display('/')">/</button>
+                <button onclick="display('7')">7</button>
+                <button onclick="display('8')">8</button>
+                <button onclick="display('9')">9</button>
+                <button onclick="display('*')">*</button>
+                <button onclick="display('4')">4</button>
+                <button onclick="display('5')">5</button>
+                <button onclick="display('6')">6</button>
+                <button onclick="display('-')">-</button>
+                <button onclick="display('1')">1</button>
+                <button onclick="display('2')">2</button>
+                <button onclick="display('3')">3</button>
+                <button onclick="display('+')">+</button>
+                <button onclick="display('.')">.</button>
+                <button onclick="display('0')">0</button>
+                <button onclick="calculate()" class="equal">=</button>
         </div>
     </div>
 
-    <script>
-        let display = document.getElementById('result');
-        let currentExpression = '0';
-
-        function updateDisplay() {
-            display.value = currentExpression;
-        }
-
-        function appendNumber(num) {
-            if (currentExpression === '0' && num !== '.') {
-                currentExpression = num;
-            } else {
-                currentExpression += num;
-            }
-            updateDisplay();
-        }
-
-        function appendOperator(operator) {
-            currentExpression += operator;
-            updateDisplay();
-        }
-
-        function clearDisplay() {
-            currentExpression = '0';
-            updateDisplay();
-        }
-
-        function backspace() {
-            if (currentExpression.length === 1) {
-                currentExpression = '0';
-            } else {
-                currentExpression = currentExpression.slice(0, -1);
-            }
-            updateDisplay();
-        }
-
-        function calculate() {
-            try {
-                currentExpression = Function('"use strict";return (' + currentExpression + ')')().toString();
-                updateDisplay();
-            } catch (error) {
-                currentExpression = 'Error';
-                updateDisplay();
-                setTimeout(clearDisplay, 1000);
-            }
-        }
-            document.addEventListener('keydown', (event) => {
-            if (event.key >= '0' && event.key <= '9' || event.key === '.') {
-                appendNumber(event.key);
-            } else if (['+', '-', '*', '/'].includes(event.key)) {
-                appendOperator(event.key);
-            } else if (event.key === 'Enter' || event.key === '=') {
-                calculate();
-            } else if (event.key === 'Backspace') {
-                backspace();
-            } else if (event.key === 'Escape') {
-                clearDisplay();
-            }
-        });
+    <script src="script.js">
     </script>
 </body>
 </html>
